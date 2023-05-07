@@ -7,17 +7,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: checkout
         uses: actions/checkout@v2
 
-      - name: Install Dependencies
+      - name: install deps
         run: npm install
 
-      - name: Typecheck
+      - name: typecheck
         run: npm run typecheck
 
-      - name: Lint
+      - name: lint
         run: npm run lint
-
-      - name: Print Environment Variable
-        run: echo $MY_ENV_VAR
