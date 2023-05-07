@@ -10,6 +10,7 @@
         "clean": "rm -rf out",
         "compile": "npm run clean && tsc",
         "test": "NODE_ENV=test mocha",
+        "typecheck": "tsc --noEmit",
         "docs": "npm run docs:openapi && npm run docs:api",
         "docs:openapi": "generate-openapi > docs/openapi.json",
         "docs:api": "generate-docs > docs/API.md"
