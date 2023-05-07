@@ -1,0 +1,41 @@
+{
+    "name": "service-descovery",
+    "version": "0.0.1",
+    "description": "a RESTful discovery service, that keeps track of periodically received heartbeats from clients",
+    "main": "out/bin/serve.js",
+    "scripts": {
+        "start": "node out/bin/serve",
+        "dev": "npm run clean && tsc -w",
+        "lint": "eslint --ext=.js,.ts --cache .",
+        "clean": "rm -rf out",
+        "compile": "npm run clean && tsc",
+        "test": "NODE_ENV=test mocha",
+        "docs": "npm run docs:openapi && npm run docs:api",
+        "docs:openapi": "generate-openapi > openapi.json",
+        "docs:api": "generate-docs > API.md",
+        "preversion": "npm run lint && npm run compile && npm run docs && git add openapi.json API.md",
+        "postversion": "git push origin $(git rev-parse --abbrev-ref HEAD) --tags"
+    },
+    "author": "benslamahassen",
+    "license": "ISC",
+    "dependencies": {
+        "@types/koa": "^2.13.6",
+        "@ubio/framework": "^15.3.0",
+        "dotenv": "^16.0.3",
+        "koa": "^2.14.2",
+        "mesh-ioc": "^3.2.0",
+        "mongodb": "^5.4.0"
+    },
+    "type": "module",
+    "devDependencies": {
+        "@nodescript/eslint-config": "^1.0.4",
+        "@types/mocha": "^10.0.1",
+        "@types/node": "^20.1.0",
+        "@types/sinon": "^10.0.14",
+        "eslint": "^8.40.0",
+        "mocha": "^10.2.0",
+        "npm-run-all": "^4.1.5",
+        "sinon": "^15.0.4",
+        "typescript": "^5.0.4"
+    }
+}
