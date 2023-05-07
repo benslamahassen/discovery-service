@@ -36,8 +36,8 @@ export class App extends Application {
     override async beforeStart() {
         await this.mongodb.client.connect();
         await this.httpServer.startServer();
-        this.scheduler.start();
         if (this.CLEANUP) {
+            this.scheduler.start();
             this.instancesCleanup.start();
         }
     }

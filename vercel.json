@@ -1,5 +1,0 @@
-{
-    "outputDirectory": "out",
-    "buildCommand": "npm run compile",
-    "regions": ["eu-west-1"]
-}
