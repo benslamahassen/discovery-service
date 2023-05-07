@@ -7,7 +7,7 @@ import {
 } from '@ubio/framework';
 import assert from 'assert';
 import { Mesh } from 'mesh-ioc';
-import * as sinon from 'sinon';
+import { restore, stub } from 'sinon';
 
 import { InstanceRepository } from '../../main/repositories/inctance.js';
 import { Scheduler } from '../../main/scheduler/scheduler.js';
@@ -48,23 +48,19 @@ describe('Cleanup service', () => {
         instanceRepository = mesh.resolve(InstanceRepository);
         cleanup = mesh.resolve(Cleanup);
         logger = mesh.resolve(Logger);
-        getInstancesByAgeStub = sinon.stub(
-            instanceRepository,
-            'getInstancesByAge'
-        );
-        deleteManyInstancesByIdsStub = sinon.stub(
+        getInstancesByAgeStub = stub(instanceRepository, 'getInstancesByAge');
+        deleteManyInstancesByIdsStub = stub(
             instanceRepository,
             'deleteManyInstancesByIds'
         );
     });
 
     afterEach(() => {
-        sinon.restore();
+        restore();
     });
 
     describe('Cleanup Service', () => {
-        // Tests that the cleanup function deletes instances older than the specified age.
-        it('test_cleanup_deletes_instances_older_than_specified_age', async () => {
+        it('should delete old instances based on age parameter', async () => {
             getInstancesByAgeStub.callsFake(async () => [instanceMock]);
 
             deleteManyInstancesByIdsStub.callsFake(async () => {});
@@ -76,8 +72,7 @@ describe('Cleanup service', () => {
             assert.ok(deleteManyInstancesByIdsStub.calledWith(['1']));
         });
 
-        // Tests that the cleanup function does not delete instances younger than the specified age.
-        it('test_cleanup_does_not_delete_any_instances_when_there_are_none_to_delete', async () => {
+        it('should not delete instances when no old ones are found', async () => {
             getInstancesByAgeStub.callsFake(async () => []);
 
             await cleanup.cleanup();
@@ -87,10 +82,10 @@ describe('Cleanup service', () => {
             assert.ok(deleteManyInstancesByIdsStub.notCalled);
         });
 
-        // Tests that the cleanup function handles errors and exceptions correctly.
-        it('test_cleanup_function_handles_errors_and_exceptions', async () => {
-            const loggerErrorStub = sinon.stub(logger, 'error');
+        it('should handle erros/exceptions', async () => {
+            const loggerErrorStub = stub(logger, 'error');
             getInstancesByAgeStub.throws(new Error('Test error'));
+
             await cleanup.cleanup();
 
             assert.ok(getInstancesByAgeStub.calledOnceWith(1));

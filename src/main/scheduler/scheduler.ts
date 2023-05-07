@@ -29,4 +29,8 @@ export class Scheduler {
             this._tasks = [];
         }
     }
+
+    tasksCount() {
+        return this._tasks.length;
+    }
 }
