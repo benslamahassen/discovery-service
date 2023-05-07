@@ -1,11 +1,14 @@
-Main functionalities:
-The Cleanup class is responsible for cleaning up instances that have exceeded a certain age. It uses a Scheduler to run the cleanup task at a specified interval, and an InstanceRepository to retrieve and delete instances. The class also logs information about the cleanup process using a Logger.
+# About
+The instances cleanup feature is a useful feature in the application that deletes instances that have exceeded a certain age. This feature can be enabled by setting the CLEANUP environment variable to true.
 
-Methods:
+# Design
+The cleanup script runs as a cron job based on the `CLEANUP_INTERVAL_CRON` environment variable. When the job runs, it checks the instances with a last heartbeat timestamp that is less than `Date.now() - CLEANUP_INSTANCE_AGE_IN_HOURS`, which is another environment variable. The instances that meet this criteria are deleted by the Cleanup class using the InstanceRepository. Information about the cleanup process is logged using a Logger.
+
+# Methods:
 - start(): adds the cleanup task to the scheduler and logs information about the cleanup process
 - cleanup(): retrieves instances that have exceeded the specified age, deletes them using the instance repository, and logs information about the cleanup process
 
-Fields:
+# Fields:
 - CLEANUP_INSTANCE_AGE_IN_HOURS: a configuration field that specifies the maximum age of instances to be cleaned up
 - CLEANUP_INTERVAL_CRON: a configuration field that specifies the interval at which the cleanup task should be run
 - instanceRepository: an instance of the InstanceRepository class used to retrieve and delete instances
