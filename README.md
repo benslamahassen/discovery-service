@@ -52,11 +52,11 @@ This endpoint registers an application instance in the specified group. The id i
 	}
 }
 ```
-## `DELETE /:group/:id`
+## `DELETE /:group/:id` - Unregister an instance
 
 This endpoint unregisters an application instance.
 
-## GET /:group
+## `GET /:group` - Get instances by a group
 This endpoint returns a JSON array describing instances of the group, which includes the instance ID, the group name, the creation time, the update time, and metadata.
 
 ```json
