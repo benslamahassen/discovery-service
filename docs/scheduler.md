@@ -63,9 +63,9 @@ Each field can contain a wildcard (*) to indicate that the cron expression shoul
 This scheduler can be improved in a number of ways. First we need to solve the current limitations:
 
 - You can not set the seconds field. It only supports 5 fields as the format above.
-- You can not use the step syntax. For example, */2 * * * * would not work.
-- You can not use the range syntax. For example, 1-5 * * * * would not work.
-- You can not use the list syntax. For example, 1,2,3 * * * * would not work.
+- You can not use the step syntax. For example, `*/2 * * * *` would not work.
+- You can not use the range syntax. For example, `1-5 * * * *` would not work.
+- You can not use the list syntax. For example, `1,2,3 * * * *` would not work.
 
 Also we can implement a few ideas:
 
