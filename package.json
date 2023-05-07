@@ -13,7 +13,7 @@
         "typecheck": "tsc --noEmit",
         "docs": "npm run docs:openapi && npm run docs:api",
         "docs:openapi": "generate-openapi > docs/openapi.json",
-        "docs:api": "generate-docs > docs/API.md"
+        "docs:api": "generate-docs > docs/api.md"
     },
     "author": "benslamahassen",
     "license": "ISC",
