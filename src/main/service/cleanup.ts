@@ -29,6 +29,7 @@ export class Cleanup {
             );
 
             if (instances.length === 0) {
+                this.logger.info('no instances to clean up');
                 return;
             }
 
@@ -42,7 +43,10 @@ export class Cleanup {
                 } instances, at ${new Date().toUTCString()}`
             );
         } catch (err: any) {
-            this.logger.error('something went wrong during cleanup.');
+            this.logger.error(
+                'something went wrong during cleanup.',
+                err?.message
+            );
         }
     }
 }
