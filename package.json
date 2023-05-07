@@ -9,7 +9,7 @@
         "lint": "eslint --cache .",
         "clean": "rm -rf out",
         "compile": "npm run clean && tsc",
-        "test": "NODE_ENV=test mocha",
+        "test": "npm run compile && NODE_ENV=test mocha",
         "typecheck": "tsc --noEmit",
         "docs": "npm run docs:openapi && npm run docs:api",
         "docs:openapi": "generate-openapi > docs/openapi.json",

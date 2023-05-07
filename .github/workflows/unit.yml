@@ -10,11 +10,8 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v3
 
-      - name: install depes
+      - name: install deps
         run: npm i
-
-      - name: build project
-        run: npm run compile
 
       - name: run unit tests
         run: npm run test
