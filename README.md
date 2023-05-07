@@ -5,7 +5,7 @@ This is a RESTful Discovery Service that keeps track of different client applica
 
 
 # Running the service
-
+Make sure Docker is up and runnning. Then run the following commands:
 ```bash
 cp .env.example .env.local
 docker-compose up
@@ -83,13 +83,13 @@ Please have a look at [scheduler docs](./docs/scheduler.md) and [cleanup process
 - An instance is a single running copy of an application. In the context of this service, an instance represents a client application that periodically sends heartbeats to the discovery service.
 
 ### Heartbeat
-- A heartbeat is a periodic message sent by a client application to the discovery service to indicate that it is still running and available. The heartbeat typically contains information such as the instance ID, group, and any associated metadata.
+- A heartbeat is a periodic message sent by a client application to the discovery service to indicate that it is still running and available. The heartbeat typically contains information such as the instance ID, group, and an optional associated metadata of ip and region.
 
 ### Expired Service
 - An expired service is a service instance that has not sent a heartbeat to the discovery service within a configurable time frame. The service considers instances that have not sent a heartbeat in the specified time frame as expired, and periodically removes them from the registry.
 
 ### Group
-- A group is a logical grouping of instances of a service. For example, a group could represent all instances of a service running in a particular region or environment. The discovery service keeps track of the number of registered instances in each group.
+- A group is a logical grouping of instances of a service. For example, a group could represent all instances of a service running in a particular region, environment or business group. The discovery service keeps track of the number of registered instances in each group.
 
 ### Metadata
-- Metadata refers to additional information about a service instance, such as IP address, region, or any other relevant information that the client application may want to attach to its heartbeat messages. The discovery service stores this metadata and returns it along with other information about the service instance.
+- Metadata refers to additional information about a service instance, such as IP address and region that the client application may want to attach to its heartbeat messages. The discovery service stores this metadata and returns it along with other information about the service instance.
