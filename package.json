@@ -18,7 +18,6 @@
     "author": "benslamahassen",
     "license": "ISC",
     "dependencies": {
-        "@types/koa": "^2.13.6",
         "@ubio/framework": "^15.3.0",
         "dotenv": "^16.0.3",
         "koa": "^2.14.2",
@@ -30,6 +29,7 @@
         "@nodescript/eslint-config": "^1.0.4",
         "@types/mocha": "^10.0.1",
         "@types/node": "^20.1.0",
+        "@types/koa": "^2.13.6",
         "@types/sinon": "^10.0.14",
         "eslint": "^8.40.0",
         "mocha": "^10.2.0",
