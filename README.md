@@ -2,6 +2,8 @@
 
 This is a RESTful Discovery Service that keeps track of different client applications by receiving periodic heartbeats. The service registers the applications and periodically removes those that did not send any heartbeats within a specified time frame ( configuarbale with env variables ). This service can be used to discover applications and get information about them, such as their group, instance ID, creation time, and metadata.
 
+Checkout [structure docs](./docs/structure.md) for more information about the project structure.
+
 
 
 # Running the service
