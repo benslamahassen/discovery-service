@@ -69,11 +69,11 @@ export class InstanceRouter extends Router {
         },
     })
     async getRegisteredGroups() {
-        const { count, entities } = await this.instanceRepository.getGroups();
+        const groups = await this.instanceRepository.getGroups();
         return {
             type: 'array',
-            count,
-            data: entities,
+            count: groups.length,
+            data: groups,
         };
     }
 
@@ -92,12 +92,13 @@ export class InstanceRouter extends Router {
         @PathParam('group', { schema: { type: 'string' } })
         group: string
     ) {
-        const { count, entities } =
-            await this.instanceRepository.getInctancesByGroup(group);
+        const instances = await this.instanceRepository.getInctancesByGroup(
+            group
+        );
         return {
             type: 'array',
-            count,
-            data: entities,
+            count: instances.length,
+            data: instances,
         };
     }
 }

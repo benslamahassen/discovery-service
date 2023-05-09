@@ -1,14 +1,27 @@
-import { MongoDb } from '@ubio/framework/modules/mongodb';
 import { dep } from 'mesh-ioc';
 
+import { MongoDatabase } from '../database.js';
 import { Group } from '../schema/group.js';
 import { Instance } from '../schema/instance.js';
 
-export class InstanceRepository {
-    @dep() private mongodb!: MongoDb;
+export abstract class InstanceRepository {
+    abstract createOrUpdate(
+        group: string,
+        id: string,
+        meta?: Record<string, any>
+    ): Promise<Instance>;
+    abstract delete(group: string, id: string): Promise<void>;
+    abstract getInctancesByGroup(group: string): Promise<Instance[]>;
+    abstract getGroups(): Promise<Group[]>;
+    abstract getInstancesByAge(maxAgeInHours: number): Promise<Instance[]>;
+    abstract deleteManyInstancesByIds(ids: string[]): Promise<void>;
+}
 
-    protected get collection() {
-        return this.mongodb.db.collection('instances');
+export class MongoInstanceRepository extends InstanceRepository {
+    @dep() private db!: MongoDatabase;
+
+    private get collection() {
+        return this.db.client.db().collection('instances');
     }
 
     async createOrUpdate(
@@ -36,7 +49,7 @@ export class InstanceRepository {
     }
 
     async delete(group: string, id: string) {
-        return this.collection.findOneAndDelete({
+        await this.collection.findOneAndDelete({
             group,
             id,
         });
@@ -48,10 +61,8 @@ export class InstanceRepository {
                 group,
             })
             .toArray();
-        return {
-            entities: instances.map((_: any) => Instance.decode(_)),
-            count: instances.length,
-        };
+
+        return instances.map((_: any) => Instance.decode(_));
     }
 
     async getGroups() {
@@ -77,10 +88,7 @@ export class InstanceRepository {
             ])
             .toArray();
 
-        return {
-            entities: groups.map((_: any) => Group.decode(_)),
-            count: groups.length,
-        };
+        return groups.map((_: any) => Group.decode(_));
     }
 
     async getInstancesByAge(maxAgeInHours: number) {
