@@ -1,4 +1,4 @@
-import { config, Logger } from '@ubio/framework';
+import { config, ConfigError, Logger } from '@ubio/framework';
 import { dep } from 'mesh-ioc';
 
 import { InstanceRepository } from '../repositories/inctance.js';
@@ -13,6 +13,12 @@ export class Cleanup {
     @dep() private logger!: Logger;
 
     async start() {
+        if (this.INSTANCE_MAX_AGE_IN_HOURS < 0) {
+            throw new ConfigError(
+                "INSTANCE_MAX_AGE_IN_HOURS can't be negative"
+            );
+        }
+
         this.scheduler.add(this.CLEANUP_SCHEDULE_CRON, async () =>
             this.cleanup()
         );
@@ -24,10 +30,6 @@ export class Cleanup {
 
     async cleanup() {
         try {
-            if (this.INSTANCE_MAX_AGE_IN_HOURS < 0) {
-                throw new Error("INSTANCE_MAX_AGE_IN_HOURS can't be negative");
-            }
-
             const instances = await this.instanceRepository.getInstancesByAge(
                 this.INSTANCE_MAX_AGE_IN_HOURS
             );
