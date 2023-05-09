@@ -5,6 +5,7 @@ import { MongoClient } from 'mongodb';
 export abstract class Database {
     abstract start(): Promise<void>;
     abstract stop(): Promise<void>;
+    abstract get client(): any;
 }
 
 export class MongoDatabase extends Database {

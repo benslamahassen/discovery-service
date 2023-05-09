@@ -1,6 +1,7 @@
 import { dep } from 'mesh-ioc';
+import { Collection, MongoClient } from 'mongodb';
 
-import { MongoDatabase } from '../database.js';
+import { Database } from '../database.js';
 import { Group } from '../schema/group.js';
 import { Instance } from '../schema/instance.js';
 
@@ -18,10 +19,11 @@ export abstract class InstanceRepository {
 }
 
 export class MongoInstanceRepository extends InstanceRepository {
-    @dep() private db!: MongoDatabase;
+    @dep() private db!: Database;
 
-    private get collection() {
-        return this.db.client.db().collection('instances');
+    private get collection(): Collection<Instance> {
+        const client: MongoClient = this.db.client;
+        return client.db().collection('instances');
     }
 
     async createOrUpdate(

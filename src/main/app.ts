@@ -1,7 +1,7 @@
 import { Application, config } from '@ubio/framework';
 import { MongoDb } from '@ubio/framework/modules/mongodb';
 
-import { MongoDatabase } from './database.js';
+import { Database, MongoDatabase } from './database.js';
 import {
     InstanceRepository,
     MongoInstanceRepository,
@@ -17,7 +17,7 @@ export class App extends Application {
     override createGlobalScope() {
         const mesh = super.createGlobalScope();
         mesh.service(MongoDb);
-        mesh.service(MongoDatabase);
+        mesh.service(Database, MongoDatabase);
         mesh.service(InstanceRepository, MongoInstanceRepository);
         mesh.service(Scheduler);
         mesh.service(Cleanup);
@@ -32,7 +32,7 @@ export class App extends Application {
     }
 
     override async beforeStart() {
-        await this.mesh.resolve(MongoDatabase).start();
+        await this.mesh.resolve(Database).start();
         await this.httpServer.startServer();
         if (this.CLEANUP) {
             this.mesh.resolve(Scheduler).start();
@@ -42,7 +42,7 @@ export class App extends Application {
 
     override async afterStop() {
         await this.httpServer.stopServer();
-        this.mesh.resolve(MongoDatabase).stop();
+        this.mesh.resolve(Database).stop();
         if (this.CLEANUP) {
             this.mesh.resolve(Scheduler).stop();
         }
