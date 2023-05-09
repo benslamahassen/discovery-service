@@ -12,6 +12,7 @@ import { restore, stub } from 'sinon';
 import { InstanceRepository } from '../../main/repositories/inctance.js';
 import { Scheduler } from '../../main/scheduler/scheduler.js';
 import { Cleanup } from '../../main/service/cleanup.js';
+import { MockInstanceRepository } from '../mocks/repositories/instance.js';
 
 describe('Cleanup service', () => {
     let mesh: Mesh;
@@ -26,7 +27,7 @@ describe('Cleanup service', () => {
         mesh = new Mesh();
         mesh.service(Cleanup);
         mesh.service(Scheduler);
-        mesh.service(InstanceRepository);
+        mesh.service(InstanceRepository, MockInstanceRepository);
         mesh.service(Config, ProcessEnvConfig);
         mesh.service(Logger, StandardLogger);
     });
