@@ -24,6 +24,10 @@ export class Cleanup {
 
     async cleanup() {
         try {
+            if (this.INSTANCE_MAX_AGE_IN_HOURS < 0) {
+                throw new Error("INSTANCE_MAX_AGE_IN_HOURS can't be negative");
+            }
+
             const instances = await this.instanceRepository.getInstancesByAge(
                 this.INSTANCE_MAX_AGE_IN_HOURS
             );
